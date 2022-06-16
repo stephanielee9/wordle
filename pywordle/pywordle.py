@@ -3,7 +3,7 @@ simple python version of wordle
 '''
 
 import random
-random.seed(3)
+# random.seed(3)
 
 class color:
    PURPLE = '\033[95m'

@@ -129,6 +129,7 @@ def main():
             break
         if guess.upper() != word and _ == 5:
             print(color.RED + color.BOLD + '\nLEWSERRR \n' + color.END)
+            print('The word was ' + color.BOLD + word + color.END)
 
 
 if __name__== "__main__":

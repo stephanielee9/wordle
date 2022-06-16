@@ -97,8 +97,16 @@ def main():
         words = f.read().upper().split()
         words_list = [x for x in words if len(x) == 5]
 
-    word = random.choice(words_list)
-    # print(word)
+    setting = input('Random word? (y/n) >>> ')
+    while setting not in ['y', 'n']:
+        setting = input('Random word? (y/n) >>> ')
+    
+    if setting == 'y':
+        word = random.choice(words_list)
+    else:
+         with open('word.txt', 'r') as f:
+            word = f.read().upper()
+    
     guesses = []
     letters_green = [] # correctly guessed letters
     letters_yellow = [] # almost correctly guessed letters

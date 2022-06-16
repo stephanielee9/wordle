@@ -15,6 +15,7 @@ class color:
    RED = '\033[91m'
    BOLD = '\033[1m'
    GREY = '\x1b[37m'
+   BLACK = '\x1b[30m'
    UNDERLINE = '\033[4m'
    END = '\033[0m'
 
@@ -31,12 +32,25 @@ def print_guesses(guess_list):
     for _ in range(blanks):
         print('_ _ _ _ _')
 
-def print_letters(letter_list):
+def print_letters(letters_green, letters_yellow, letters_grey):
     '''
     prints unused letters for remaining guesses
     '''
 
-    pass
+    letters = list('abcdefghijklmnopqrstuvwxyz'.upper())
+    print('')
+    for i in range(26):
+        if letters[i] in letters_green:
+            print(color.GREEN + color.BOLD + letters[i] + color.END + ' ', end='')
+        elif letters[i] in letters_yellow:
+            print(color.YELLOW + color.BOLD + letters[i] + color.END + ' ', end='')
+        elif letters[i] in letters_grey:
+            print(color.GREY + color.BOLD + letters[i] + color.END + ' ', end='')
+        else:
+            print(color.BLACK + color.BOLD + letters[i] + color.END + ' ', end='')
+        if i % 9 == 0 and i != 0:
+            print('')
+    print('')
 
 def validate_guess(guess, words_list):
     
@@ -54,7 +68,7 @@ def validate_guess(guess, words_list):
         return False
 
 
-def format_guess(guess, word):
+def format_guess(guess, word, letters_green, letters_yellow, letters_grey):
     '''
     formats input
     adds spaces between letters and capitalizes letters
@@ -68,11 +82,14 @@ def format_guess(guess, word):
     for i in range(5):
         if guess[i].upper() == word[i]:
             formatted_guess += color.GREEN + color.BOLD + guess[i].upper() + color.END + " "
+            letters_green.append(guess[i].upper())
         elif guess[i].upper() in word:
             formatted_guess += color.YELLOW + color.BOLD + guess[i].upper() + color.END + " "
+            letters_yellow.append(guess[i].upper())
         else:
             formatted_guess += color.GREY + color.BOLD + guess[i].upper() + color.END + " "
-    return(formatted_guess)
+            letters_grey.append(guess[i].upper())
+    return formatted_guess, letters_green, letters_yellow, letters_grey
 
 def main():
 
@@ -83,21 +100,27 @@ def main():
     word = random.choice(words_list)
     # print(word)
     guesses = []
+    letters_green = [] # correctly guessed letters
+    letters_yellow = [] # almost correctly guessed letters
+    letters_grey = []  # incorrectly guessed letters
     print_guesses(guesses)
+    print_letters(letters_green, letters_yellow, letters_grey)
+
 
     for _ in range(6):
         guess = input(color.PURPLE + color.BOLD + '>>> ' + color.END)
         # while not (guess.isalpha() and len(guess) == 5):
         while not validate_guess(guess, words_list):
             guess = input(color.PURPLE + color.BOLD + '>>> ' + color.END)
-        guesses.append(format_guess(guess, word))
+        formatted_guess, letters_green, letters_yellow, letters_grey = format_guess(guess, word, letters_green, letters_yellow, letters_grey)
+        guesses.append(formatted_guess)
         print_guesses(guesses)
+        print_letters(letters_green, letters_yellow, letters_grey)
         if guess.upper() == word:
             print(color.PURPLE + color.BOLD + '\nYOU WIN! \n' + color.END)
             break
-
-
-
+        if guess.upper() != word and _ == 5:
+            print(color.RED + color.BOLD + '\nLEWSERRR \n' + color.END)
 
 
 if __name__== "__main__":

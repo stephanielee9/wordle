@@ -47,7 +47,7 @@ def print_letters(letters_green, letters_yellow, letters_grey):
         elif letters[i] in letters_grey:
             print(color.GREY + color.BOLD + letters[i] + color.END + ' ', end='')
         else:
-            print(color.BLACK + color.BOLD + letters[i] + color.END + ' ', end='')
+            print(color.BOLD + letters[i] + color.END + ' ', end='')
         if i % 9 == 0 and i != 0:
             print('')
     print('')
@@ -129,7 +129,7 @@ def main():
             break
         if guess.upper() != word and _ == 5:
             print(color.RED + color.BOLD + '\nLEWSERRR \n' + color.END)
-            print('The word was ' + color.BOLD + word + color.END)
+            print('The word was ' + color.BOLD + word + color.END + '\n')
 
 
 if __name__== "__main__":

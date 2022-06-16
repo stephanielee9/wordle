@@ -81,7 +81,7 @@ def main():
         words_list = [x for x in words if len(x) == 5]
 
     word = random.choice(words_list)
-    print(word)
+    # print(word)
     guesses = []
     print_guesses(guesses)
 
@@ -92,6 +92,9 @@ def main():
             guess = input(color.PURPLE + color.BOLD + '>>> ' + color.END)
         guesses.append(format_guess(guess, word))
         print_guesses(guesses)
+        if guess.upper() == word:
+            print(color.PURPLE + color.BOLD + '\nYOU WIN! \n' + color.END)
+            break
 
 
 

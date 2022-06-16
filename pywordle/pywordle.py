@@ -14,6 +14,7 @@ class color:
    YELLOW = '\033[93m'
    RED = '\033[91m'
    BOLD = '\033[1m'
+   GRAY = '\x1b[37m'
    UNDERLINE = '\033[4m'
    END = '\033[0m'
 
@@ -57,26 +58,24 @@ def format_guess(guess):
 
 def main():
 
-    with open('common_words.txt', 'r') as f:
+    with open('scrabble_5.txt', 'r') as f:
         words = f.read().upper().split()
         words_list = [x for x in words if len(x) == 5]
 
+    word = random.choice(words_list)
+    print(word)
     guesses = []
     print_guesses(guesses)
-    word = random.choice(words_list)
 
     for _ in range(6):
-        guess = input(color.RED + color.BOLD + '>>> ' + color.END)
+        guess = input(color.GRAY + color.BOLD + '>>> ' + color.END)
         while not (guess.isalpha() and len(guess) == 5):
-            guess = input(color.RED + color.BOLD + '>>> ' + color.END)
+            guess = input(color.GRAY + color.BOLD + '>>> ' + color.END)
         guesses.append(format_guess(guess))
         print_guesses(guesses)
 
 
 
-
-
-    # print(word)
 
 
 if __name__== "__main__":
